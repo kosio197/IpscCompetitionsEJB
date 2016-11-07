@@ -1,40 +1,43 @@
 package bg.softuni.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
-import competition.bg.softuni.model.enumeration.Category;
-
+@NamedQuery(name = "categoryByName", query = "SELECT c FROM CategoryModel c WHERE c.name = :categoryName")
 @Entity
 @Table(name = "categories")
-public class CategoryModel {
+public class CategoryModel implements Serializable {
 
-    private Integer id;
-    private Category name;
+    private static final long serialVersionUID = 1L;
+    private Long id;
+    private String name;
 
     public CategoryModel() {
     }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
     @Column(name = "name", nullable = false)
-    public Category getName() {
+    public String getName() {
         return name;
     }
 
-    public void setName(Category name) {
+    public void setName(String name) {
         this.name = name;
     }
 }

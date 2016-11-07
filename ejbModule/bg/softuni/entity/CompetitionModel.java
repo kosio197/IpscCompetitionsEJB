@@ -1,5 +1,6 @@
 package bg.softuni.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -15,9 +16,11 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "competitions")
-public class CompetitionModel {
+public class CompetitionModel implements Serializable {
 
-    private int id;
+    private static final long serialVersionUID = 1L;
+
+    private Long id;
     private String name;
     private Date preMathDate;
     private Date mainMathDate;
@@ -51,11 +54,11 @@ public class CompetitionModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

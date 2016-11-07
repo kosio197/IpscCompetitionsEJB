@@ -1,5 +1,7 @@
 package bg.softuni.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,9 +13,11 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "stages")
-public class StageModel {
+public class StageModel implements Serializable {
 
-    private Integer id;
+    private static final long serialVersionUID = 1L;
+
+    private Long id;
     private Integer stageNumber;
     private CompetitionModel competition;
     private Integer minRound;
@@ -38,11 +42,11 @@ public class StageModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

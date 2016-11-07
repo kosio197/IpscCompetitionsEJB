@@ -1,5 +1,7 @@
 package bg.softuni.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,35 +9,31 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import competition.bg.softuni.model.enumeration.PowerFactor;
-
 @Entity
 @Table(name = "powerfactors")
-public class PowerFactorModel {
+public class PowerFactorModel implements Serializable {
 
-    private Integer id;
-    private PowerFactor name;
+    private static final long serialVersionUID = 1L;
 
-    public PowerFactorModel() {
-
-    }
+    private Long id;
+    private String name;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
     @Column(name = "name", nullable = false)
-    public PowerFactor getName() {
+    public String getName() {
         return name;
     }
 
-    public void setName(PowerFactor name) {
+    public void setName(String name) {
         this.name = name;
     }
 }

@@ -1,29 +1,24 @@
 package bg.softuni.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
-import competition.bg.softuni.model.enumeration.Role;
-
+@NamedQuery(name = "roleByName", query = "SELECT c FROM RoleModel c WHERE c.name = :roleName")
 @Entity
 @Table(name = "roles")
-public class RoleModel {
+public class RoleModel implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private Integer id;
-    private Role name;
-
-    public RoleModel() {
-    }
-
-    public RoleModel(Integer id, Role name) {
-        super();
-        this.id = id;
-        this.name = name;
-    }
+    private String name;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,11 +31,11 @@ public class RoleModel {
     }
 
     @Column(name = "name", nullable = false)
-    public Role getName() {
+    public String getName() {
         return name;
     }
 
-    public void setName(Role name) {
+    public void setName(String name) {
         this.name = name;
     }
 

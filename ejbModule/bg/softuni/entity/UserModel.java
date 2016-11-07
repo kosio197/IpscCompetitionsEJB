@@ -1,5 +1,8 @@
 package bg.softuni.entity;
 
+import java.io.Serializable;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,9 +14,11 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "users")
-public class UserModel {
+public class UserModel implements Serializable {
 
-    private int id;
+    private static final long serialVersionUID = 1L;
+
+    private Long id;
     private String firstName;
     private String midleName;
     private String lastName;
@@ -27,7 +32,7 @@ public class UserModel {
     private CountryModel countryModel;
     private CategoryModel categoryModel;
     private HandgunDivisionModel handgun;
-    private HandgunDivisionModel shotgun;
+    private ShotgunDivisionModel shotgun;
     private RifleDivisionModel rifle;
 
     public UserModel() {
@@ -37,7 +42,7 @@ public class UserModel {
     public UserModel(String firstName, String midleName, String lastName, String username, String alias,
             String password, String email, String telephone, RoleModel role, ClubModel clubModel,
             CountryModel countryModel, CategoryModel categoryModel, HandgunDivisionModel handgun,
-            HandgunDivisionModel shotgun, RifleDivisionModel rifle) {
+            ShotgunDivisionModel shotgun, RifleDivisionModel rifle) {
         super();
         this.firstName = firstName;
         this.midleName = midleName;
@@ -58,11 +63,11 @@ public class UserModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -149,7 +154,7 @@ public class UserModel {
     }
 
     @JoinColumn(name = "club_id", referencedColumnName = "id")
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     public ClubModel getClubModel() {
         return clubModel;
     }
@@ -190,11 +195,11 @@ public class UserModel {
 
     @JoinColumn(name = "shoting_division_id", referencedColumnName = "id")
     @ManyToOne
-    public HandgunDivisionModel getShotgun() {
+    public ShotgunDivisionModel getShotgun() {
         return shotgun;
     }
 
-    public void setShotgun(HandgunDivisionModel shotgun) {
+    public void setShotgun(ShotgunDivisionModel shotgun) {
         this.shotgun = shotgun;
     }
 
