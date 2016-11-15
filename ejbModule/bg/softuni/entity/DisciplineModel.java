@@ -10,20 +10,20 @@ import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
-@NamedQuery(name = "currencyByName", query = "SELECT c FROM CurencyModel c WHERE c.name = :currencyName")
+@NamedQuery(name = "disciplineByName", query = "SELECT c FROM DisciplineModel c WHERE c.name = :disciplineName")
 @Entity
-@Table(name = "currencies")
-public class CurencyModel implements Serializable {
+@Table(name = "disciplines")
+public class DisciplineModel implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     private Long id;
     private String name;
 
-    public CurencyModel() {
+    public DisciplineModel() {
     }
 
-    public CurencyModel(String name) {
+    public DisciplineModel(String name) {
         super();
         this.name = name;
     }

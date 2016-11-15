@@ -144,7 +144,7 @@ public class UserModel implements Serializable {
     }
 
     @JoinColumn(name = "role_id", referencedColumnName = "id")
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
     public RoleModel getRole() {
         return role;
     }

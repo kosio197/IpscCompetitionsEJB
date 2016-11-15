@@ -1,4 +1,4 @@
-package competition.bg.softuni.model.enumeration;
+package bg.softuni.model.enumeration;
 
 public enum RiffleDevision {
     SAS("Semi-auto Standard"), SAO("Semi-auto Open"), MAS("Manual Action Standard"), MAO("Manual Action Open");

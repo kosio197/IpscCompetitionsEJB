@@ -1,5 +1,6 @@
 package bg.softuni.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -8,25 +9,22 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import competition.bg.softuni.model.enumeration.PaymentStatus;
-import competition.bg.softuni.model.enumeration.ResultStatus;
-
 @Entity
 @Table(name = "registered_users")
 public class RegisteredUserModel {
 
-    private Integer id;
+    private Long id;
     private CompetitionModel competition;
     private UserModel user;
-    private PaymentStatus paymentStatus;
-    private ResultStatus resultStatus;
+    private String paymentStatus;
+    private String resultStatus;
 
     public RegisteredUserModel() {
 
     }
 
-    public RegisteredUserModel(CompetitionModel competition, UserModel user, PaymentStatus paymentStatus,
-            ResultStatus resultStatus) {
+    public RegisteredUserModel(CompetitionModel competition, UserModel user, String paymentStatus,
+            String resultStatus) {
         super();
         this.competition = competition;
         this.user = user;
@@ -36,11 +34,11 @@ public class RegisteredUserModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -64,19 +62,21 @@ public class RegisteredUserModel {
         this.user = user;
     }
 
-    public PaymentStatus getPaymentStatus() {
+    @Column(name = "payment_status", nullable = false)
+    public String getPaymentStatus() {
         return paymentStatus;
     }
 
-    public void setPaymentStatus(PaymentStatus paymentStatus) {
+    public void setPaymentStatus(String paymentStatus) {
         this.paymentStatus = paymentStatus;
     }
 
-    public ResultStatus getResultStatus() {
+    @Column(name = "result_status", nullable = false)
+    public String getResultStatus() {
         return resultStatus;
     }
 
-    public void setResultStatus(ResultStatus resultStatus) {
+    public void setResultStatus(String resultStatus) {
         this.resultStatus = resultStatus;
     }
 

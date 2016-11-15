@@ -1,4 +1,4 @@
-package competition.bg.softuni.model.enumeration;
+package bg.softuni.model.enumeration;
 
 public enum HandgunDevision {
     PRD("Production"), STD("Standard"), OPN("Open"), REV("Revolver"), CLS("Classic");

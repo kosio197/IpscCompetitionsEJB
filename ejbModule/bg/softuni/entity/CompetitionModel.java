@@ -22,6 +22,7 @@ public class CompetitionModel implements Serializable {
 
     private Long id;
     private String name;
+    private String address;
     private Date preMathDate;
     private Date mainMathDate;
     private Date registryDeadLineDate;
@@ -31,16 +32,20 @@ public class CompetitionModel implements Serializable {
     private Integer level;
     private String description;
     private UserModel createdBy;
+    private DisciplineModel discipline;
+    private Integer minRounds;
+    private Integer stageCount;
 
     public CompetitionModel() {
 
     }
 
-    public CompetitionModel(String name, Date preMathDate, Date mainMathDate, Date registryDeadLineDate,
+    public CompetitionModel(String name, String address, Date preMathDate, Date mainMathDate, Date registryDeadLineDate,
             Date paymentDeadLineDate, Double entryFee, CurencyModel curency, Integer level, String description,
-            UserModel createdBy) {
+            UserModel createdBy, DisciplineModel discipline, Integer minRounds, Integer stageCount) {
         super();
         this.name = name;
+        this.address = address;
         this.preMathDate = preMathDate;
         this.mainMathDate = mainMathDate;
         this.registryDeadLineDate = registryDeadLineDate;
@@ -49,7 +54,10 @@ public class CompetitionModel implements Serializable {
         this.curency = curency;
         this.level = level;
         this.description = description;
-        this.setCreatedBy(createdBy);
+        this.createdBy = createdBy;
+        this.discipline = discipline;
+        this.minRounds = minRounds;
+        this.stageCount = stageCount;
     }
 
     @Id
@@ -156,6 +164,43 @@ public class CompetitionModel implements Serializable {
 
     public void setCreatedBy(UserModel createdBy) {
         this.createdBy = createdBy;
+    }
+
+    @Column(name = "address", nullable = false)
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    @JoinColumn(name = "discipline_id", referencedColumnName = "id")
+    @ManyToOne
+    public DisciplineModel getDiscipline() {
+        return discipline;
+    }
+
+    public void setDiscipline(DisciplineModel discipline) {
+        this.discipline = discipline;
+    }
+
+    @Column(name = "min_rounds", nullable = false)
+    public Integer getMinRounds() {
+        return minRounds;
+    }
+
+    public void setMinRounds(Integer minRounds) {
+        this.minRounds = minRounds;
+    }
+
+    @Column(name = "stage_count", nullable = false)
+    public Integer getStageCount() {
+        return stageCount;
+    }
+
+    public void setStageCount(Integer stageCount) {
+        this.stageCount = stageCount;
     }
 
 }

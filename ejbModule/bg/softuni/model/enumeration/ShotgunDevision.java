@@ -1,4 +1,4 @@
-package competition.bg.softuni.model.enumeration;
+package bg.softuni.model.enumeration;
 
 public enum ShotgunDevision {
     STM("Standard Manual"), STD("Standard"), OPN("Open"), MOD("Modified");
