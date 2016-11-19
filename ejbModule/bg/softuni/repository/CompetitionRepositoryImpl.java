@@ -144,6 +144,7 @@ public class CompetitionRepositoryImpl implements CompetitionRepository {
         cm.setId(competition.getId());
         cm.setStages(competition.getStages());
         cm.setResults(competition.getResults());
+        cm.setSqads(competition.getSquads());
         return cm;
     }
 
