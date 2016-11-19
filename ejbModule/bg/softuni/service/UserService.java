@@ -8,17 +8,16 @@ import bg.softuni.model.user.User;
 
 @Local
 public interface UserService {
-    public void addUser(User user);
+    void addUser(User user);
 
-    public User deleteUser(String email);
+    void deleteUser(String username);
 
-    public User getUser(String email);
+    void editUserRole(User user);
 
-    public User validateUser(String username, String password);
+    void editProfile(User logetUser, User user);
 
-    public void editProfile(User logetUser, User user);
+    List<User> getAllUsers();
 
-    public List<User> getAllUsers();
+    User getUser(String username, String password);
 
-    public void editUserRole(User user);
 }

@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.ejb.Local;
 
-import bg.softuni.entity.UserModel;
 import bg.softuni.model.competition.Competition;
 import bg.softuni.model.user.User;
 
@@ -12,13 +11,16 @@ import bg.softuni.model.user.User;
 public interface UsersRepository {
     void addUser(User user);
 
-    User getUser(String username);
-
     void editUser(User logetUser, User user);
 
-    UserModel editUserRole(User user);
+    void removeUser(String username);
+
+    void editUserRole(User user);
+
+    User getUser(String username);
 
     List<User> getRegisteredCompetitors(Competition competition);
 
     List<User> getAllUsers();
+
 }

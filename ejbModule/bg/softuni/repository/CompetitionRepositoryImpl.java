@@ -16,6 +16,8 @@ import bg.softuni.entity.DisciplineModel;
 import bg.softuni.entity.RegisteredUserModel;
 import bg.softuni.entity.UserModel;
 import bg.softuni.model.competition.Competition;
+import bg.softuni.model.competition.Squad;
+import bg.softuni.model.competition.Stage;
 import bg.softuni.model.enumeration.Category;
 import bg.softuni.model.enumeration.Discipline;
 import bg.softuni.model.enumeration.HandgunDevision;
@@ -44,8 +46,9 @@ public class CompetitionRepositoryImpl implements CompetitionRepository {
 
     @Override
     public void editCompetition(Competition competition) {
-        // TODO Auto-generated method stub
-
+        CompetitionModel cm = competitionModelToEntitiy(competition);
+        em.merge(cm);
+        em.flush();
     }
 
     @Override
@@ -63,11 +66,38 @@ public class CompetitionRepositoryImpl implements CompetitionRepository {
 
     @Override
     public String addCompetitor(Competition competition) {
-        CompetitionModel cm = getCurrentCompetition(competition);
+        CompetitionModel cm = competitionModelToEntitiy(competition);
         UserModel um = getCurrentLogetUser();
         RegisteredUserModel rum = new RegisteredUserModel(cm, um, PaymentStatus.NO.name(), ResultStatus.PROCESS.name());
         em.persist(rum);
         return "/page/competitions?faces-redirect=true";
+    }
+
+    @Override
+    public void removeCompetitor(Competition competition) {
+        UserModel um = getCurrentLogetUser();
+        Query q = em.createNativeQuery("delete from registered_users where user_id = :uid and competition_id =  :cid");
+        q.setParameter("uid", um.getId());
+        q.setParameter("cid", competition.getId());
+        q.executeUpdate();
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<Stage> getStageByCompetition(Competition competition) {
+        CompetitionModel cm = competitionModelToEntitiy(competition);
+        Query q = em.createNativeQuery("select st from stages st where competition_id =  :cid");
+        q.setParameter("cid", cm.getId());
+        return q.getResultList();
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<Squad> getSquadsByCompetition(Competition competition) {
+        CompetitionModel cm = competitionModelToEntitiy(competition);
+        Query q = em.createNativeQuery("select sq from squads sq where competition_id =  :cid");
+        q.setParameter("cid", cm.getId());
+        return q.getResultList();
     }
 
     private Competition CompetitionEntityToModel(CompetitionModel competitionModel) {
@@ -81,13 +111,18 @@ public class CompetitionRepositoryImpl implements CompetitionRepository {
                 PowerFactor.valueOf(um.getRifle().getPowerfactor().getName()),
                 ShotgunDevision.valueOf(um.getShotgun().getName()), Role.valueOf(um.getRole().getName()));
 
-        return new Competition(competitionModel.getName(), competitionModel.getAddress(),
+        Competition comp = new Competition(competitionModel.getName(), competitionModel.getAddress(),
                 competitionModel.getCurency().getName(), competitionModel.getDescription(), user,
                 competitionModel.getMainMathDate(), competitionModel.getPreMathDate(),
                 competitionModel.getRegistryDeadLineDate(), competitionModel.getPaymentDeadLineDate(),
                 competitionModel.getLevel(), competitionModel.getEntryFee(),
                 Discipline.valueOf(competitionModel.getDiscipline().getName()), competitionModel.getMinRounds(),
                 competitionModel.getStageCount());
+        comp.setId(competitionModel.getId());
+        comp.setStages(competitionModel.getStages());
+        comp.setResults(competitionModel.getResults());
+        comp.setSquads(competitionModel.getSqads());
+        return comp;
 
     }
 
@@ -101,10 +136,15 @@ public class CompetitionRepositoryImpl implements CompetitionRepository {
         DisciplineModel disciplineModel = em.createNamedQuery("disciplineByName", DisciplineModel.class)
                 .setParameter("disciplineName", competition.getDiscipline().name()).getSingleResult();
 
-        return new CompetitionModel(competition.getName(), competition.getAddress(), competition.getPrematchDate(),
-                competition.getMatchDate(), competition.getRegistrationDeadline(), competition.getPaymentDeadline(),
-                competition.getFee(), curencyModel, competition.getLevel(), competition.getDescription(), userModel,
-                disciplineModel, competition.getMinRound(), competition.getStageCount());
+        CompetitionModel cm = new CompetitionModel(competition.getName(), competition.getAddress(),
+                competition.getPrematchDate(), competition.getMatchDate(), competition.getRegistrationDeadline(),
+                competition.getPaymentDeadline(), competition.getFee(), curencyModel, competition.getLevel(),
+                competition.getDescription(), userModel, disciplineModel, competition.getMinRound(),
+                competition.getStageCount());
+        cm.setId(competition.getId());
+        cm.setStages(competition.getStages());
+        cm.setResults(competition.getResults());
+        return cm;
     }
 
     private UserModel getCurrentLogetUser() {
@@ -115,15 +155,6 @@ public class CompetitionRepositoryImpl implements CompetitionRepository {
         q.setParameter("un", currentLogetUser.getUsername());
 
         return (UserModel) q.getSingleResult();
-    }
-
-    private CompetitionModel getCurrentCompetition(Competition competition) {
-        String query = "select c from CompetitionModel c where c.name = :cName and c.mainMathDate = :cMainMatch";
-        Query q = em.createQuery(query);
-        q.setParameter("cName", competition.getName());
-        q.setParameter("cMainMatch", competition.getMatchDate());
-
-        return (CompetitionModel) q.getSingleResult();
     }
 
     public EntityManager getEm() {

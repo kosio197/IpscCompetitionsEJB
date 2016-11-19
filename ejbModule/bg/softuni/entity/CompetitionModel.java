@@ -35,6 +35,9 @@ public class CompetitionModel implements Serializable {
     private DisciplineModel discipline;
     private Integer minRounds;
     private Integer stageCount;
+    private byte[] stages;
+    private byte[] results;
+    private byte[] sqads;
 
     public CompetitionModel() {
 
@@ -201,6 +204,33 @@ public class CompetitionModel implements Serializable {
 
     public void setStageCount(Integer stageCount) {
         this.stageCount = stageCount;
+    }
+
+    @Column(name = "stages")
+    public byte[] getStages() {
+        return stages;
+    }
+
+    public void setStages(byte[] stages) {
+        this.stages = stages;
+    }
+
+    @Column(name = "results")
+    public byte[] getResults() {
+        return results;
+    }
+
+    public void setResults(byte[] results) {
+        this.results = results;
+    }
+
+    @Column(name = "sqads")
+    public byte[] getSqads() {
+        return sqads;
+    }
+
+    public void setSqads(byte[] sqads) {
+        this.sqads = sqads;
     }
 
 }

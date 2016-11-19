@@ -44,6 +44,25 @@ public class UsersRepositoryImpl implements UsersRepository {
     }
 
     @Override
+    public List<User> getAllUsers() {
+        Query q = em.createQuery("select u from UserModel u");
+        @SuppressWarnings("unchecked")
+        List<UserModel> models = q.getResultList();
+        List<User> users = new ArrayList<>();
+        for (UserModel userModel : models) {
+            users.add(userEntityToModel(userModel));
+        }
+        return users;
+    }
+
+    @Override
+    public void removeUser(String username) {
+        UserModel um = getUserModel(username);
+        em.remove(um);
+        em.flush();
+    }
+
+    @Override
     public void editUser(User LogedUser, User user) {
         UserModel um = getUserModel(LogedUser.getUsername());
         um.setAlias(user.getAlias());
@@ -56,7 +75,9 @@ public class UsersRepositoryImpl implements UsersRepository {
         um.getHandgun().getPowerfactor().setName(user.getDefaultHandgunPowerFactor().name());
         um.setLastName(user.getLastName());
         um.setMidleName(user.getMiddleName());
-        um.setPassword(user.getPassword());
+        if (user.getPassword() == null || !user.getPassword().equals("")) {
+            um.setPassword(user.getPassword());
+        }
         um.getRifle().setName(user.getDefaultRiffleDevision().name());
         um.getRifle().getPowerfactor().setName(user.getDefaultRifflePowerFactor().name());
         um.getShotgun().setName(user.getDefaultShotgunDevision().name());
@@ -67,7 +88,7 @@ public class UsersRepositoryImpl implements UsersRepository {
     }
 
     @Override
-    public UserModel editUserRole(User user) {
+    public void editUserRole(User user) {
         UserModel um = getUserModel(user.getUsername());
         Query q = em.createNamedQuery("roleByName", RoleModel.class).setParameter("roleName", user.getRole().name());
         RoleModel rm = (RoleModel) q.getSingleResult();
@@ -75,7 +96,6 @@ public class UsersRepositoryImpl implements UsersRepository {
         um.setRole(rm);
         em.merge(um);
         em.flush();
-        return um;
     }
 
     @SuppressWarnings("unchecked")
@@ -167,15 +187,4 @@ public class UsersRepositoryImpl implements UsersRepository {
         return um;
     }
 
-    @Override
-    public List<User> getAllUsers() {
-        Query q = em.createQuery("select u from UserModel u");
-        @SuppressWarnings("unchecked")
-        List<UserModel> models = q.getResultList();
-        List<User> users = new ArrayList<>();
-        for (UserModel userModel : models) {
-            users.add(userEntityToModel(userModel));
-        }
-        return users;
-    }
 }

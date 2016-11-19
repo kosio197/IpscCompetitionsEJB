@@ -11,6 +11,7 @@ public class Competition implements Serializable {
      *
      */
     private static final long serialVersionUID = 1L;
+    private Long id;
     private String name;
     private String address;
     private String feeCurrency;
@@ -25,6 +26,9 @@ public class Competition implements Serializable {
     private Discipline discipline;
     private Integer minRound;
     private Integer stageCount;
+    private byte[] stages;
+    private byte[] results;
+    private byte[] squads;
 
     public Competition() {
 
@@ -168,6 +172,38 @@ public class Competition implements Serializable {
 
     public void setStageCount(Integer stageCount) {
         this.stageCount = stageCount;
+    }
+
+    public byte[] getStages() {
+        return stages;
+    }
+
+    public void setStages(byte[] stages) {
+        this.stages = stages;
+    }
+
+    public byte[] getResults() {
+        return results;
+    }
+
+    public void setResults(byte[] results) {
+        this.results = results;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public byte[] getSquads() {
+        return squads;
+    }
+
+    public void setSquads(byte[] squads) {
+        this.squads = squads;
     }
 
 }

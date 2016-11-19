@@ -1,19 +1,14 @@
 package bg.softuni.model.competition;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Stage {
+
     private int number;
-    private int minRounds;
-    private int maxPoints;
+    private byte[] image;
 
-    private String description;
-
-    private List<StageResult> stageResults;
-
-    public Stage() {
-        stageResults = new ArrayList<StageResult>();
+    public Stage(int number, byte[] image) {
+        super();
+        this.number = number;
+        this.image = image;
     }
 
     public int getNumber() {
@@ -24,35 +19,11 @@ public class Stage {
         this.number = number;
     }
 
-    public int getMinRounds() {
-        return minRounds;
+    public byte[] getImage() {
+        return image;
     }
 
-    public void setMinRounds(int minRounds) {
-        this.minRounds = minRounds;
-    }
-
-    public int getMaxPoints() {
-        return maxPoints;
-    }
-
-    public void setMaxPoints(int maxPoints) {
-        this.maxPoints = maxPoints;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public List<StageResult> getStageResults() {
-        return stageResults;
-    }
-
-    public void setStageResults(List<StageResult> stageResults) {
-        this.stageResults = stageResults;
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 }
