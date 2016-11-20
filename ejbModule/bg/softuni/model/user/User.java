@@ -225,6 +225,14 @@ public class User implements Serializable {
         return defaultRifleDevision.toString();
     }
 
+    public String getDefaulHandgunPowerFactorAsString() {
+        return defaultHandgunPowerFactor.toString();
+    }
+
+    public String getDefaulRiflePowerFactorAsString() {
+        return defaultRiflePowerFactor.toString();
+    }
+
     public String getRoleAsString() {
         return role.toString();
     }

@@ -206,4 +206,8 @@ public class Competition implements Serializable {
         this.squads = squads;
     }
 
+    public String getDisciplineAsString() {
+        return discipline.toString();
+    }
+
 }

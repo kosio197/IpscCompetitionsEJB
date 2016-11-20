@@ -17,7 +17,7 @@ public interface CompetitionRepository {
 
     List<Competition> getAllCompetitions();
 
-    String addCompetitor(Competition competition);
+    void addCompetitor(Competition competition);
 
     void removeCompetitor(Competition competition);
 

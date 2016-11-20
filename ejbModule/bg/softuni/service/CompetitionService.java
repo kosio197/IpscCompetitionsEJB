@@ -16,7 +16,7 @@ public interface CompetitionService {
 
     void addCompetition(Competition competition);
 
-    String addCompetitor(Competition competition);
+    void addCompetitor(Competition competition);
 
     List<User> getCompetitors(Competition competition);
 

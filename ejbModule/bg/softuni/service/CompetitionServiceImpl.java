@@ -39,8 +39,8 @@ public class CompetitionServiceImpl implements CompetitionService {
     }
 
     @Override
-    public String addCompetitor(Competition competition) {
-        return competitionRepository.addCompetitor(competition);
+    public void addCompetitor(Competition competition) {
+        competitionRepository.addCompetitor(competition);
     }
 
     @Override

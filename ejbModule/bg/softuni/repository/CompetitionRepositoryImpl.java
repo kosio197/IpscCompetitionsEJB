@@ -81,12 +81,11 @@ public class CompetitionRepositoryImpl implements CompetitionRepository {
     }
 
     @Override
-    public String addCompetitor(Competition competition) {
+    public void addCompetitor(Competition competition) {
         CompetitionModel cm = competitionModelToEntitiy(competition);
         UserModel um = getCurrentLogetUser();
         RegisteredUserModel rum = new RegisteredUserModel(cm, um, PaymentStatus.NO.name(), ResultStatus.PROCESS.name());
         em.persist(rum);
-        return "/page/competitions?faces-redirect=true";
     }
 
     @Override
