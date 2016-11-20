@@ -12,7 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
-@NamedQuery(name = "rdmByName", query = "select c from RifleDivisionModel c, PowerFactorModel p where c.name = :rdmName and p.name = :pfName"
+@NamedQuery(name = "rdmByNameAndPowerFactor", query = "select c from RifleDivisionModel c, PowerFactorModel p where c.name = :rdmName and p.name = :pfName"
         + " and c.powerfactor.id = p.id")
 @Entity
 @Table(name = "rifle_divisions")

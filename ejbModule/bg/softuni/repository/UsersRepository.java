@@ -9,6 +9,10 @@ import bg.softuni.model.user.User;
 
 @Local
 public interface UsersRepository {
+    boolean usernameExists(String username);
+
+    boolean emailExists(String email);
+
     void addUser(User user);
 
     void editUser(User logetUser, User user);

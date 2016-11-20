@@ -12,7 +12,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
-@NamedQuery(name = "hdmByName", query = "select c from HandgunDivisionModel c, PowerFactorModel p where c.name = :hdmName and p.name = :pfName")
+@NamedQuery(name = "hdmByNameAndPowerFactor", query = "select c from HandgunDivisionModel c, PowerFactorModel p "
+        + "where c.name = :hdmName and p.name = :pfName and c.powerfactor.id=p.id")
 @Entity
 @Table(name = "handgun_divisions")
 public class HandgunDivisionModel implements Serializable {

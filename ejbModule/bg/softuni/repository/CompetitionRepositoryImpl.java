@@ -24,7 +24,7 @@ import bg.softuni.model.enumeration.HandgunDevision;
 import bg.softuni.model.enumeration.PaymentStatus;
 import bg.softuni.model.enumeration.PowerFactor;
 import bg.softuni.model.enumeration.ResultStatus;
-import bg.softuni.model.enumeration.RiffleDevision;
+import bg.softuni.model.enumeration.RifleDevision;
 import bg.softuni.model.enumeration.Role;
 import bg.softuni.model.enumeration.ShotgunDevision;
 import bg.softuni.model.user.User;
@@ -47,6 +47,22 @@ public class CompetitionRepositoryImpl implements CompetitionRepository {
     @Override
     public void editCompetition(Competition competition) {
         CompetitionModel cm = competitionModelToEntitiy(competition);
+        CurencyModel currencyModel = em.createNamedQuery("currencyByName", CurencyModel.class)
+                .setParameter("currencyName", competition.getFeeCurrency().toString()).getSingleResult();
+
+        cm.setCurency(currencyModel);
+
+        DisciplineModel discModel = em.createNamedQuery("disciplineByName", DisciplineModel.class)
+                .setParameter("disciplineName", competition.getDiscipline().toString())
+                .getSingleResult();
+
+        cm.setDiscipline(discModel);
+
+        UserModel userModel = em.createNamedQuery("userByUsername", UserModel.class)
+                .setParameter("username", competition.getCreatedBy().getUsername()).getSingleResult();
+
+        cm.setCreatedBy(userModel);
+
         em.merge(cm);
         em.flush();
     }
@@ -107,7 +123,7 @@ public class CompetitionRepositoryImpl implements CompetitionRepository {
                 um.getTelephone(), Category.valueOf(um.getCategoryModel().getName()),
                 HandgunDevision.valueOf(um.getHandgun().getName()),
                 PowerFactor.valueOf(um.getHandgun().getPowerfactor().getName()),
-                RiffleDevision.valueOf(um.getRifle().getName()),
+                RifleDevision.valueOf(um.getRifle().getName()),
                 PowerFactor.valueOf(um.getRifle().getPowerfactor().getName()),
                 ShotgunDevision.valueOf(um.getShotgun().getName()), Role.valueOf(um.getRole().getName()));
 

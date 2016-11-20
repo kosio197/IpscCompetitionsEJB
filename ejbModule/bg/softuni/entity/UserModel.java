@@ -10,8 +10,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+@NamedQueries({
+        @NamedQuery(name = "userByUsername", query = "SELECT c FROM UserModel c WHERE c.username = :username"),
+        @NamedQuery(name = "userByEmail", query = "SELECT c FROM UserModel c WHERE c.email = :email"),
+})
 @Entity
 @Table(name = "users")
 public class UserModel implements Serializable {

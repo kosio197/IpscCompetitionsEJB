@@ -40,6 +40,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User getUser(String username) {
+        return repository.getUser(username);
+    }
+
+    @Override
     public void editProfile(User logetUser, User user) {
         if (!user.getPassword().equals("")) {
             user.setPassword(getEncodePassword(user.getPassword()));
@@ -75,6 +80,16 @@ public class UserServiceImpl implements UserService {
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException("No encoding support", e);
         }
+    }
+
+    @Override
+    public boolean usernameExists(String username) {
+        return repository.usernameExists(username);
+    }
+
+    @Override
+    public boolean emailExists(String email) {
+        return repository.emailExists(email);
     }
 
 }

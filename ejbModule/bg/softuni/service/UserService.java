@@ -8,6 +8,10 @@ import bg.softuni.model.user.User;
 
 @Local
 public interface UserService {
+    boolean usernameExists(String username);
+
+    boolean emailExists(String email);
+
     void addUser(User user);
 
     void deleteUser(String username);
@@ -20,4 +24,5 @@ public interface UserService {
 
     User getUser(String username, String password);
 
+    User getUser(String username);
 }

@@ -1,14 +1,14 @@
 package bg.softuni.model.user;
 
 import bg.softuni.model.enumeration.PowerFactor;
-import bg.softuni.model.enumeration.RiffleDevision;
+import bg.softuni.model.enumeration.RifleDevision;
 
-public class RiffleCompetitor extends RegisteredCompetitor {
-    private RiffleDevision devision;
+public class RifleCompetitor extends RegisteredCompetitor {
+    private RifleDevision devision;
     private PowerFactor powerFactor;
 
-    public RiffleCompetitor() {
-        devision = user.getDefaultRiffleDevision();
+    public RifleCompetitor() {
+        devision = user.getDefaultRifleDevision();
         powerFactor = user.getDefaultHandgunPowerFactor();
     }
 
@@ -20,11 +20,11 @@ public class RiffleCompetitor extends RegisteredCompetitor {
         this.powerFactor = powerFactor;
     }
 
-    public RiffleDevision getDevision() {
+    public RifleDevision getDevision() {
         return devision;
     }
 
-    public void setDevision(RiffleDevision devision) {
+    public void setDevision(RifleDevision devision) {
         this.devision = devision;
     }
 }

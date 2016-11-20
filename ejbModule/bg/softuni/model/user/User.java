@@ -5,7 +5,7 @@ import java.io.Serializable;
 import bg.softuni.model.enumeration.Category;
 import bg.softuni.model.enumeration.HandgunDevision;
 import bg.softuni.model.enumeration.PowerFactor;
-import bg.softuni.model.enumeration.RiffleDevision;
+import bg.softuni.model.enumeration.RifleDevision;
 import bg.softuni.model.enumeration.Role;
 import bg.softuni.model.enumeration.ShotgunDevision;
 
@@ -30,8 +30,8 @@ public class User implements Serializable {
     private HandgunDevision defaultHandgunDevision;
     private PowerFactor defaultHandgunPowerFactor;
 
-    private RiffleDevision defaultRifleDevision;
-    private PowerFactor defaultRifflePowerFactor;
+    private RifleDevision defaultRifleDevision;
+    private PowerFactor defaultRiflePowerFactor;
 
     private ShotgunDevision defaultShotgunDevision;
 
@@ -39,11 +39,11 @@ public class User implements Serializable {
 
     public User() {
         defaultHandgunDevision = HandgunDevision.PRD;
-        defaultShotgunDevision = ShotgunDevision.MOD;
-        defaultRifleDevision = RiffleDevision.MAO;
+        defaultShotgunDevision = ShotgunDevision.STD;
+        defaultRifleDevision = RifleDevision.MAO;
 
         defaultHandgunPowerFactor = PowerFactor.MIN;
-        defaultRifflePowerFactor = PowerFactor.MIN;
+        defaultRiflePowerFactor = PowerFactor.MIN;
 
         category = Category.REGULAR;
 
@@ -55,7 +55,7 @@ public class User implements Serializable {
     public User(String username, String password, String firstName, String middleName, String lastName, String alias,
             String shootingClub, String email, String country, String telephone, Category category,
             HandgunDevision defaultHandgunDevision, PowerFactor defaultHandgunPowerFactor,
-            RiffleDevision defaultRiffleDevision, PowerFactor defaultRifflePowerFactor,
+            RifleDevision defaultRifleDevision, PowerFactor defaultRiflePowerFactor,
             ShotgunDevision defaultShotgunDevision, Role role) {
         super();
         this.username = username;
@@ -71,8 +71,8 @@ public class User implements Serializable {
         this.category = category;
         this.defaultHandgunDevision = defaultHandgunDevision;
         this.defaultHandgunPowerFactor = defaultHandgunPowerFactor;
-        this.defaultRifleDevision = defaultRiffleDevision;
-        this.defaultRifflePowerFactor = defaultRifflePowerFactor;
+        this.defaultRifleDevision = defaultRifleDevision;
+        this.defaultRiflePowerFactor = defaultRiflePowerFactor;
         this.defaultShotgunDevision = defaultShotgunDevision;
         this.role = role;
     }
@@ -141,12 +141,12 @@ public class User implements Serializable {
         this.defaultShotgunDevision = defaultShotgunDevision;
     }
 
-    public RiffleDevision getDefaultRiffleDevision() {
+    public RifleDevision getDefaultRifleDevision() {
         return defaultRifleDevision;
     }
 
-    public void setDefaultRiffleDevision(RiffleDevision defaultRiffleDevision) {
-        this.defaultRifleDevision = defaultRiffleDevision;
+    public void setDefaultRifleDevision(RifleDevision defaultRifleDevision) {
+        this.defaultRifleDevision = defaultRifleDevision;
     }
 
     public PowerFactor getDefaultHandgunPowerFactor() {
@@ -157,12 +157,12 @@ public class User implements Serializable {
         this.defaultHandgunPowerFactor = defaultHandgunPowerFactor;
     }
 
-    public PowerFactor getDefaultRifflePowerFactor() {
-        return defaultRifflePowerFactor;
+    public PowerFactor getDefaultRiflePowerFactor() {
+        return defaultRiflePowerFactor;
     }
 
-    public void setDefaultRifflePowerFactor(PowerFactor defaultRifflePowerFactor) {
-        this.defaultRifflePowerFactor = defaultRifflePowerFactor;
+    public void setDefaultRiflePowerFactor(PowerFactor defaultRiflePowerFactor) {
+        this.defaultRiflePowerFactor = defaultRiflePowerFactor;
     }
 
     public HandgunDevision getDefaultHandgunDevision() {

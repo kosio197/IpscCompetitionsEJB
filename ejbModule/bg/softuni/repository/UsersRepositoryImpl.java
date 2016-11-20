@@ -21,7 +21,7 @@ import bg.softuni.model.competition.Competition;
 import bg.softuni.model.enumeration.Category;
 import bg.softuni.model.enumeration.HandgunDevision;
 import bg.softuni.model.enumeration.PowerFactor;
-import bg.softuni.model.enumeration.RiffleDevision;
+import bg.softuni.model.enumeration.RifleDevision;
 import bg.softuni.model.enumeration.Role;
 import bg.softuni.model.enumeration.ShotgunDevision;
 import bg.softuni.model.user.User;
@@ -65,24 +65,61 @@ public class UsersRepositoryImpl implements UsersRepository {
     @Override
     public void editUser(User LogedUser, User user) {
         UserModel um = getUserModel(LogedUser.getUsername());
+
         um.setAlias(user.getAlias());
-        um.getCategoryModel().setName(user.getCategory().name());
-        um.getClubModel().setName(user.getShootingClub());
-        um.getCountryModel().setName(user.getCountry());
         um.setEmail(user.getEmail());
         um.setFirstName(user.getFirstName());
-        um.getHandgun().setName(user.getDefaultHandgunDevision().name());
-        um.getHandgun().getPowerfactor().setName(user.getDefaultHandgunPowerFactor().name());
         um.setLastName(user.getLastName());
         um.setMidleName(user.getMiddleName());
+        um.setTelephone(user.getTelephone());
+        um.setUsername(user.getUsername());
+
         if (user.getPassword() == null || !user.getPassword().equals("")) {
             um.setPassword(user.getPassword());
         }
-        um.getRifle().setName(user.getDefaultRiffleDevision().name());
-        um.getRifle().getPowerfactor().setName(user.getDefaultRifflePowerFactor().name());
-        um.getShotgun().setName(user.getDefaultShotgunDevision().name());
-        um.setTelephone(user.getTelephone());
-        um.setUsername(user.getUsername());
+
+        try {
+            ClubModel club = em.createNamedQuery("clubByName", ClubModel.class)
+                    .setParameter("clubName", user.getShootingClub()).getSingleResult();
+            um.setClubModel(club);
+        } catch (NoResultException e) {
+            um.getClubModel().setName(user.getShootingClub());
+        }
+
+        CountryModel country = em.createNamedQuery("countryByName", CountryModel.class)
+                .setParameter("countryName", user.getCountry()).getSingleResult();
+
+        um.setCountryModel(country);
+
+        CategoryModel cm = em.createNamedQuery("categoryByName", CategoryModel.class)
+                .setParameter("categoryName", user.getCategory().toString()).getSingleResult();
+
+        um.setCategoryModel(cm);
+
+        HandgunDivisionModel hdm = null;
+        if (user.getDefaultHandgunDevision() != null) {
+            hdm = em.createNamedQuery("hdmByNameAndPowerFactor", HandgunDivisionModel.class)
+                    .setParameter("hdmName", user.getDefaultHandgunDevision().toString())
+                    .setParameter("pfName", user.getDefaultHandgunPowerFactor().toString()).getSingleResult();
+        }
+        um.setHandgun(hdm);
+
+        RifleDivisionModel rdm = null;
+        if (user.getDefaultRifleDevision() != null) {
+            rdm = em.createNamedQuery("rdmByNameAndPowerFactor", RifleDivisionModel.class)
+                    .setParameter("rdmName", user.getDefaultRifleDevision().toString())
+                    .setParameter("pfName", user.getDefaultRiflePowerFactor().toString()).getSingleResult();
+        }
+        um.setRifle(rdm);
+
+        ShotgunDivisionModel sdm = null;
+
+        if (user.getDefaultShotgunDevision() != null) {
+            sdm = em.createNamedQuery("sdmByName", ShotgunDivisionModel.class)
+                    .setParameter("sdmName", user.getDefaultShotgunDevision().toString()).getSingleResult();
+        }
+        um.setShotgun(sdm);
+
         em.merge(um);
         em.flush();
     }
@@ -121,7 +158,7 @@ public class UsersRepositoryImpl implements UsersRepository {
                 um.getTelephone(), Category.valueOf(um.getCategoryModel().getName()),
                 HandgunDevision.valueOf(um.getHandgun().getName()),
                 PowerFactor.valueOf(um.getHandgun().getPowerfactor().getName()),
-                RiffleDevision.valueOf(um.getRifle().getName()),
+                RifleDevision.valueOf(um.getRifle().getName()),
                 PowerFactor.valueOf(um.getRifle().getPowerfactor().getName()),
                 ShotgunDevision.valueOf(um.getShotgun().getName()), Role.valueOf(um.getRole().getName()));
 
@@ -148,7 +185,7 @@ public class UsersRepositoryImpl implements UsersRepository {
         CountryModel countryModel = em.createNamedQuery("countryByName", CountryModel.class)
                 .setParameter("countryName", user.getCountry()).getSingleResult();
 
-        HandgunDivisionModel hdm = em.createNamedQuery("hdmByName", HandgunDivisionModel.class)
+        HandgunDivisionModel hdm = em.createNamedQuery("hdmByNameAndPowerFactor", HandgunDivisionModel.class)
                 .setParameter("hdmName", user.getDefaultHandgunDevision().toString())
                 .setParameter("pfName", user.getDefaultHandgunPowerFactor().toString()).getSingleResult();
 
@@ -161,10 +198,10 @@ public class UsersRepositoryImpl implements UsersRepository {
 
         RifleDivisionModel rdm = null;
 
-        if (user.getDefaultRiffleDevision() != null) {
-            rdm = em.createNamedQuery("rdmByName", RifleDivisionModel.class)
-                    .setParameter("rdmName", user.getDefaultRiffleDevision().toString())
-                    .setParameter("pfName", user.getDefaultRifflePowerFactor().toString()).getSingleResult();
+        if (user.getDefaultRifleDevision() != null) {
+            rdm = em.createNamedQuery("rdmByNameAndPowerFactor", RifleDivisionModel.class)
+                    .setParameter("rdmName", user.getDefaultRifleDevision().toString())
+                    .setParameter("pfName", user.getDefaultRiflePowerFactor().toString()).getSingleResult();
         }
 
         return new UserModel(user.getFirstName(), user.getMiddleName(), user.getLastName(), user.getUsername(),
@@ -185,6 +222,26 @@ public class UsersRepositoryImpl implements UsersRepository {
             System.out.println(e.toString());
         }
         return um;
+    }
+
+    @Override
+    public boolean usernameExists(String username) {
+        try {
+            em.createNamedQuery("userByUsername").setParameter("username", username).getSingleResult();
+            return true;
+        } catch (NoResultException e) {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean emailExists(String email) {
+        try {
+            em.createNamedQuery("userByEmail").setParameter("email", email).getSingleResult();
+            return true;
+        } catch (NoResultException e) {
+            return false;
+        }
     }
 
 }

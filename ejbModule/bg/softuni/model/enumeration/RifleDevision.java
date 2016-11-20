@@ -1,11 +1,11 @@
 package bg.softuni.model.enumeration;
 
-public enum RiffleDevision {
+public enum RifleDevision {
     SAS("Semi-auto Standard"), SAO("Semi-auto Open"), MAS("Manual Action Standard"), MAO("Manual Action Open");
 
     private String value;
 
-    private RiffleDevision(String value) {
+    private RifleDevision(String value) {
         this.value = value;
     }
 
@@ -13,7 +13,7 @@ public enum RiffleDevision {
         return value;
     }
 
-    public static RiffleDevision fromValue(String value) {
+    public static RifleDevision fromValue(String value) {
         if (value.equals("Semi-auto Standard")) {
             return SAS;
         }
@@ -30,6 +30,6 @@ public enum RiffleDevision {
             return MAO;
         }
 
-        throw new RuntimeException("Invalid riffle devision!");
+        throw new RuntimeException("Invalid rifle devision!");
     }
 }

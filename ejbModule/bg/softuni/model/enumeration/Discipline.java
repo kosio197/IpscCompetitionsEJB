@@ -1,7 +1,7 @@
 package bg.softuni.model.enumeration;
 
 public enum Discipline {
-    HANDGUN("Handgun"), SHOTGUN("Shotgun"), RIFFLE("Riffle");
+    HANDGUN("Handgun"), SHOTGUN("Shotgun"), RIFLE("Rifle");
 
     private String value;
 
@@ -22,8 +22,8 @@ public enum Discipline {
             return SHOTGUN;
         }
 
-        if (value.equals("Riffle")) {
-            return RIFFLE;
+        if (value.equals("Rifle")) {
+            return RIFLE;
         }
 
         throw new RuntimeException("Invalid discipline!");
